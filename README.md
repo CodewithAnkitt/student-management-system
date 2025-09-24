@@ -1,4 +1,3 @@
-
 # Student Management System
 
 A web-based Student Management System built with Django. This application allows administrators, staff, and students to manage academic activities, attendance, notifications, and more.
