@@ -1,0 +1,266 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+{% block page_title %}{{page_title}}{% endblock page_title %}
+
+{% block custom_css %}
+<style>
+    /* Modern Gradient Color Scheme for Staff */
+    .small-box.bg-gradient-teal {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%) !important;
+        color: white;
+    }
+    
+    .small-box.bg-gradient-indigo {
+        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%) !important;
+        color: white;
+    }
+    
+    .small-box.bg-gradient-pink {
+        background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%) !important;
+        color: white;
+    }
+    
+    .small-box.bg-gradient-cyan {
+        background: linear-gradient(135deg, #0093E9 0%, #80D0C7 100%) !important;
+        color: white;
+    }
+    
+    .small-box {
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .small-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .small-box .icon {
+        font-size: 70px;
+        opacity: 0.3;
+    }
+    
+    .card.card-modern-teal {
+        border-top: 3px solid #11998e;
+        box-shadow: 0 2px 10px rgba(17, 153, 142, 0.1);
+    }
+    
+    .card.card-modern-teal .card-header {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        color: white;
+        border-radius: 0;
+    }
+    
+    .card.card-modern-indigo {
+        border-top: 3px solid #6a11cb;
+        box-shadow: 0 2px 10px rgba(106, 17, 203, 0.1);
+    }
+    
+    .card.card-modern-indigo .card-header {
+        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+        color: white;
+        border-radius: 0;
+    }
+</style>
+{% endblock custom_css %}
+
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-gradient-teal">
+                    <div class="inner">
+                        <h3>{{total_students}}</h3>
+                        <p>Total Students</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-gradient-indigo">
+                    <div class="inner">
+                        <h3>{{total_attendance}}</h3>
+                        <p>Total Attendance Taken</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-gradient-pink">
+                    <div class="inner">
+                        <h3>{{total_leave}}</h3>
+                        <p>Total Leave Applied</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-calendar-times"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-gradient-cyan">
+                    <div class="inner">
+                        <h3>{{total_subject}}</h3>
+                        <p>Total Subjects</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
+        </div>
+        <!-- /.row -->
+        <!-- Main row -->
+        <div class="row">
+            <div class="col-md-6">
+                <!-- PIE CHART -->
+                <div class="card card-modern-teal">
+                  <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-chart-pie mr-2"></i>Attendance vs Leave</h3>
+    
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                      </button>
+                      <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart">
+                      <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card -->
+            </div>
+            <div class="col-md-6">
+                <div class="card card-modern-indigo">
+                  <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-chart-bar mr-2"></i>Attendance Per Subject</h3>
+
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                      </button>
+                      <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart">
+                      <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+            </div>
+            <!-- right col -->
+        </div>
+        <!-- /.row (main row) -->
+    </div><!-- /.container-fluid -->
+</section>
+{% endblock content %}
+
+{% block chart_js %}
+<script src="{% static 'plugins/chart.js/Chart.min.js'%}"></script>
+{% endblock chart_js %}
+
+{% block custom_js %}
+  <script>
+      $(document).ready(function(){
+        var donutData        = {
+            labels: ['Attendance', 'Leave'],
+            datasets: [
+              {
+                data:[{{total_attendance}}, {{total_leave}}],
+                backgroundColor : ['#11998e', '#ee0979'],
+                borderWidth: 0,
+                hoverOffset: 10
+              }
+            ]
+          }
+        var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+        var pieData        = donutData;
+        var pieOptions     = {
+          maintainAspectRatio : false,
+          responsive : true,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                padding: 20,
+                font: {
+                  size: 14
+                }
+              }
+            }
+          }
+        }
+        //Create doughnut chart
+        var pieChart = new Chart(pieChartCanvas, {
+          type: 'doughnut',
+          data: pieData,
+          options: pieOptions      
+        });
+
+        var subject_list = {{ subject_list|safe|escape }};
+        var attendance_list = {{ attendance_list }};
+  
+        var barChartData = {
+          labels  : subject_list,
+          datasets: [
+            {
+              label               : 'Attendance Count',
+              backgroundColor     : 'rgba(106, 17, 203, 0.8)',
+              borderColor         : '#6a11cb',
+              borderWidth         : 2,
+              borderRadius        : 5,
+              data                : attendance_list
+            }
+          ]
+        }
+        
+        var barChartCanvas = $('#barChart').get(0).getContext('2d')
+    
+        var stackedBarChartOptions = {
+          responsive              : true,
+          maintainAspectRatio     : false,
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            x: {
+              grid: {
+                display: false
+              }
+            },
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: 'rgba(0, 0, 0, 0.05)'
+              }
+            }
+          }
+        }
+    
+        var barChart = new Chart(barChartCanvas, {
+          type: 'bar', 
+          data: barChartData,
+          options: stackedBarChartOptions
+        })
+      })
+  </script>
+{% endblock custom_js %}
